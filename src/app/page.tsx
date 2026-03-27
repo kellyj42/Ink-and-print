@@ -1,7 +1,17 @@
+import Navbar from "./components/layouts/nav";
+import FeaturedProducts from "./components/sections/FeaturedProducts";
+import Hero from "./components/sections/Hero";
+import ServicesPage from "./components/sections/Services";
+import TrustSection from "./components/sections/TrustSection";
+
 export default function Home() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world! kelly
-    </h1>
+   <>
+     
+     <Hero/>
+     <FeaturedProducts/>
+     <ServicesPage/>
+     <TrustSection/>
+   </>
   )
 }
