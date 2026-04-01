@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,6 +10,19 @@ import {
   Phone,
   Sparkles,
 } from "lucide-react";
+import { buildMetadata } from "../../lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Contact",
+  description:
+    "Contact Ink & Apparels for quotes, order support, artwork guidance, and custom printing consultations.",
+  path: "/contact",
+  keywords: [
+    "contact print shop Uganda",
+    "custom branding consultation",
+    "apparel printing contact",
+  ],
+});
 
 const contactCards = [
   {

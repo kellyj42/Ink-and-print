@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,6 +10,19 @@ import {
   Send,
   ShieldCheck,
 } from "lucide-react";
+import { buildMetadata } from "../../lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Order Custom Printing",
+  description:
+    "Send a custom order request for branded apparel, promotional products, and print services with Ink & Apparels.",
+  path: "/order",
+  keywords: [
+    "order custom printing",
+    "request branded apparel quote",
+    "custom printing order Uganda",
+  ],
+});
 
 const steps = [
   "Tell us what item you want, quantity, and preferred service.",

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -8,6 +9,20 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { buildMetadata } from "../../lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Services",
+  description:
+    "Explore DTF printing, UV printing, vinyl cutting, sublimation, and custom branding services from Ink & Apparels.",
+  path: "/services",
+  keywords: [
+    "DTF printing Uganda",
+    "UV printing Uganda",
+    "vinyl cutting services",
+    "sublimation printing Uganda",
+  ],
+});
 
 const services = [
   {
