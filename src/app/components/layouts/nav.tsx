@@ -10,6 +10,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const cartItems = useCart();
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="w-full fixed top-0 left-0 z-50 bg-[hsl(0,0%,7%)]  shadow-sm">
@@ -136,30 +137,33 @@ export default function Navbar() {
               Close
             </button>
           </div>
-          <Link href="/" className="block hover:text-[hsl(355,82%,56%)]">
+          <Link href="/" onClick={closeMenu} className="block hover:text-[hsl(355,82%,56%)]">
             Home
           </Link>
           <Link
             href="/products"
+            onClick={closeMenu}
             className="block hover:text-[hsl(355,82%,56%)]"
           >
             Products
           </Link>
           <Link
             href="/services"
+            onClick={closeMenu}
             className="block hover:text-[hsl(355,82%,56%)]"
           >
             Services
           </Link>
-          <Link href="/order" className="block hover:text-[hsl(355,82%,56%)]">
+          <Link href="/order" onClick={closeMenu} className="block hover:text-[hsl(355,82%,56%)]">
             Order
           </Link>
-          <Link href="/contact" className="block hover:text-[hsl(355,82%,56%)]">
+          <Link href="/contact" onClick={closeMenu} className="block hover:text-[hsl(355,82%,56%)]">
             Contact
           </Link>
 
           <Link
             href="/order"
+            onClick={closeMenu}
             className="block text-center py-2 rounded-lg text-white bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)]"
           >
             Order Now
