@@ -77,19 +77,6 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-          <Link
-            href="/checkout"
-            className="relative hover:text-[hsl(355,82%,56%)] transition"
-          >
-            Cart
-            {cartCount > 0 ? (
-              <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(355,82%,56%)] px-1 text-[10px] font-bold text-white">
-                {cartCount}
-              </span>
-            ) : null}
-          </Link>
-          </li>
-          <li>
             <Link
               href="/contact"
               className="hover:text-[hsl(355,82%,56%)] transition"
@@ -100,22 +87,22 @@ export default function Navbar() {
         </ul>
 
         {/* Right Side */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="flex items-center space-x-3">
           <Link
             href="/checkout"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2 text-white transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
+            aria-label="Cart"
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)] hover:bg-white/10"
           >
-            <ShoppingCart className="h-4 w-4" />
-            Cart
+            <ShoppingCart className="h-5 w-5" />
             {cartCount > 0 ? (
-              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(355,82%,56%)] px-1 text-[10px] font-bold text-white">
+              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(355,82%,56%)] px-1 text-[10px] font-bold text-white">
                 {cartCount}
               </span>
             ) : null}
           </Link>
           <Link
             href="/order"
-            className="px-5 py-2 rounded-lg text-white bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] hover:opacity-90 transition"
+            className="hidden rounded-lg bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] px-5 py-2 text-white transition hover:opacity-90 md:inline-flex"
           >
             Order Now
           </Link>
@@ -123,7 +110,10 @@ export default function Navbar() {
 
         {/* Mobile Button */}
         <button
-          className="md:hidden text-[hsl(0,0%,7%)]"
+          type="button"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:bg-white/10 md:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X /> : <Menu />}
@@ -133,6 +123,19 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[hsl(0,0%,100%)] border-t border-[hsl(0,0%,95%)] px-4 py-4 space-y-4 text-[hsl(0,0%,7%)]">
+          <div className="flex items-center justify-between border-b border-[hsl(0,0%,92%)] pb-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(0,0%,45%)]">
+              Menu
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="inline-flex items-center gap-2 rounded-full border border-[hsl(0,0%,88%)] px-3 py-2 text-sm font-medium text-[hsl(0,0%,18%)] transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
+            >
+              <X className="h-4 w-4" />
+              Close
+            </button>
+          </div>
           <Link href="/" className="block hover:text-[hsl(355,82%,56%)]">
             Home
           </Link>
@@ -150,12 +153,6 @@ export default function Navbar() {
           </Link>
           <Link href="/order" className="block hover:text-[hsl(355,82%,56%)]">
             Order
-          </Link>
-          <Link
-            href="/checkout"
-            className="block hover:text-[hsl(355,82%,56%)]"
-          >
-            Cart {cartCount > 0 ? `(${cartCount})` : ""}
           </Link>
           <Link href="/contact" className="block hover:text-[hsl(355,82%,56%)]">
             Contact
