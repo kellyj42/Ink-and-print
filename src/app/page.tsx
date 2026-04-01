@@ -1,4 +1,3 @@
-import Navbar from "./components/layouts/nav";
 import FeaturedProducts from "./components/sections/FeaturedProducts";
 import Hero from "./components/sections/Hero";
 import ServicesPage from "./components/sections/Services";

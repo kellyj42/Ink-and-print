@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgeCheck,
   Clock3,
   FileImage,
   MessageSquareText,
@@ -48,79 +47,76 @@ const orderNotes = [
 export default function OrderPage() {
   return (
     <main className="bg-[hsl(0,0%,100%)] text-[hsl(0,0%,7%)]">
-      <section className="relative overflow-hidden bg-[hsl(0,0%,7%)] pb-24 pt-32 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_hsla(355,82%,56%,0.28),_transparent_34%),radial-gradient(circle_at_82%_18%,_hsla(24,95%,53%,0.22),_transparent_28%)]" />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur">
-              <BadgeCheck className="h-4 w-4 text-[hsl(24,95%,53%)]" />
-              Custom print requests for one-off pieces and bulk orders
+      <section className="border-b border-[hsl(0,0%,92%)] bg-[hsl(0,0%,99%)] pt-28 pb-8">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[hsl(355,82%,56%)]">
+                Place Order
+              </p>
+              <h1 className="mt-3 text-4xl font-bold md:text-5xl">
+                Fill in your request and let&apos;s move into production
+              </h1>
+              <p className="mt-4 text-lg text-[hsl(0,0%,7%,0.68)]">
+                This page is now built to feel direct and practical, so the client
+                lands on the order flow quickly instead of reading through a full hero.
+              </p>
             </div>
 
-            <h1 className="mt-6 max-w-4xl text-5xl font-bold leading-tight md:text-7xl">
-              Start your
-              <span className="bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] bg-clip-text text-transparent">
-                {" "}
-                order the easy way
-              </span>
-            </h1>
-
-            <p className="mt-6 max-w-3xl text-lg text-white/80 md:text-xl">
-              Send us the basics of what you need and we&apos;ll help shape the
-              right product, print method, and production flow for your project.
-            </p>
-
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               <Link
                 href="/products"
-                className="rounded-xl bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] px-6 py-3 font-semibold text-white transition hover:opacity-90"
+                className="rounded-xl bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] px-5 py-3 font-semibold text-white transition hover:opacity-90"
               >
                 Browse Products
               </Link>
               <Link
                 href="/services"
-                className="rounded-xl border border-white/20 px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-[hsl(0,0%,7%)]"
+                className="rounded-xl border border-[hsl(0,0%,85%)] px-5 py-3 font-semibold text-[hsl(0,0%,20%)] transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
               >
                 Compare Services
               </Link>
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur md:p-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[hsl(24,95%,53%)]">
-              What To Prepare
-            </p>
-            <div className="mt-6 space-y-4">
-              {[
-                "Product type or item idea",
-                "Estimated quantity and sizes",
-                "Logo, artwork, or design direction",
-                "Preferred deadline or event date",
-              ].map((item) => (
-                <div key={item} className="flex gap-3 rounded-2xl bg-white/5 p-4">
-                  <PackageCheck className="mt-0.5 h-5 w-5 shrink-0 text-[hsl(24,95%,53%)]" />
-                  <p className="text-sm leading-6 text-white/80">{item}</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              "Product type or item idea",
+              "Estimated quantity and sizes",
+              "Logo, artwork, or design direction",
+              "Preferred deadline or event date",
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-[1.5rem] border border-[hsl(0,0%,90%)] bg-white p-5 shadow-sm"
+              >
+                <div className="flex gap-3">
+                  <PackageCheck className="mt-0.5 h-5 w-5 shrink-0 text-[hsl(355,82%,56%)]" />
+                  <p className="text-sm leading-6 text-[hsl(0,0%,7%,0.72)]">{item}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20">
+      <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="rounded-[2rem] border border-[hsl(0,0%,92%)] bg-white p-8 shadow-sm md:p-10">
             <div className="flex items-start justify-between gap-6">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[hsl(355,82%,56%)]">
-                  Order Request
+                  Order Form
                 </p>
                 <h2 className="mt-4 text-4xl font-bold md:text-5xl">
                   Tell us what you want to print
                 </h2>
                 <p className="mt-4 max-w-2xl text-lg text-[hsl(0,0%,7%,0.68)]">
-                  This form is a clean starting point for custom requests, quotes,
-                  and production planning.
+                  The faster the request is filled, the faster we can price,
+                  confirm, and move your work forward.
+                </p>
+                <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(355,82%,56%)]">
+                  All quotes and pricing are shared in UGX
                 </p>
               </div>
 
@@ -231,7 +227,8 @@ export default function OrderPage() {
                 <p className="mt-2 text-sm leading-6 text-[hsl(0,0%,7%,0.68)]">
                   File upload and live submission can be connected next if you
                   want. For now, this page is designed as a polished order
-                  request interface consistent with the rest of the site.
+                  request interface consistent with the rest of the site, and
+                  all pricing is communicated in UGX.
                 </p>
               </div>
 
@@ -296,11 +293,13 @@ export default function OrderPage() {
               <div className="mt-8 rounded-2xl bg-[hsl(0,0%,97%)] p-5">
                 <div className="flex items-center gap-3">
                   <Phone className="h-5 w-5 text-[hsl(355,82%,56%)]" />
-                  <p className="font-semibold">Call or WhatsApp</p>
+                  <p className="font-semibold">Contact Lines</p>
                 </div>
-                <p className="mt-2 text-sm text-[hsl(0,0%,7%,0.68)]">
-                  0704444845
-                </p>
+                <div className="mt-2 space-y-1 text-sm text-[hsl(0,0%,7%,0.68)]">
+                  <p>WhatsApp and calls: 0704444845</p>
+                  <p>Other calls: 0790084845</p>
+                  <p className="break-all">Email: jamiebanku10@gmail.com</p>
+                </div>
               </div>
             </div>
           </div>

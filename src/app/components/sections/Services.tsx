@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const services = [
@@ -30,37 +31,34 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="w-full bg-[hsl(0,0%,100%)] pt-24">
-      
-      {/* HERO */}
-      <section className="text-center px-4 py-16">
-        <h1 className="text-4xl md:text-6xl font-bold text-[hsl(0,0%,7%)]">
+      <section className="px-4 py-16 text-center">
+        <h1 className="text-4xl font-bold text-[hsl(0,0%,7%)] md:text-6xl">
           Our{" "}
           <span className="bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] bg-clip-text text-transparent">
             Printing Services
           </span>
         </h1>
-        <p className="mt-6 max-w-2xl mx-auto text-[hsl(0,0%,7%,0.7)]">
-          We offer a range of modern printing solutions to bring your designs to life with precision, durability, and style.
+        <p className="mx-auto mt-6 max-w-2xl text-[hsl(0,0%,7%,0.7)]">
+          We offer a range of modern printing solutions to bring your designs
+          to life with precision, durability, and style.
         </p>
       </section>
 
-      {/* SERVICES GRID */}
-      <section className="max-w-7xl mx-auto px-4 pb-20 grid gap-10 grid-cols-1 md:grid-cols-4">
-        {services.map((service, index) => (
+      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 pb-20 md:grid-cols-4">
+        {services.map((service) => (
           <div
-            key={index}
-            className="group bg-[hsl(0,0%,95%)] rounded-2xl overflow-hidden hover:shadow-lg transition"
+            key={service.title}
+            className="group overflow-hidden rounded-2xl bg-[hsl(0,0%,95%)] transition hover:shadow-lg"
           >
-            {/* Image */}
-            <div className="overflow-hidden">
-              <img
+            <div className="relative h-64 overflow-hidden">
+              <Image
                 src={service.image}
                 alt={service.title}
-                className="w-full h-64 object-cover group-hover:scale-105 transition duration-500"
+                fill
+                className="object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
 
-            {/* Content */}
             <div className="p-6">
               <h2 className="text-2xl font-semibold text-[hsl(0,0%,7%)]">
                 {service.title}
@@ -71,35 +69,35 @@ export default function ServicesPage() {
 
               <Link
                 href="/order"
-                className="inline-block mt-5 text-[hsl(355,82%,56%)] font-medium hover:underline"
+                className="mt-5 inline-block font-medium text-[hsl(355,82%,56%)] hover:underline"
               >
-                Request This Service →
+                Request This Service &rarr;
               </Link>
             </div>
           </div>
         ))}
       </section>
 
-      {/* CTA SECTION */}
-      <section className="text-center py-16 px-4 bg-[hsl(0,0%,7%)] text-white">
-        <h2 className="text-3xl md:text-4xl font-bold">
+      <section className="bg-[hsl(0,0%,7%)] px-4 py-16 text-center text-white">
+        <h2 className="text-3xl font-bold md:text-4xl">
           Ready to Bring Your Design to Life?
         </h2>
         <p className="mt-4 text-[hsl(0,0%,100%,0.7)]">
-          Let’s create something amazing together. Place your order now or contact us for custom requests.
+          Let&apos;s create something amazing together. Place your order now or
+          contact us for custom requests.
         </p>
 
-        <div className="mt-8 flex justify-center gap-4 flex-wrap">
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link
             href="/order"
-            className="px-6 py-3 rounded-lg bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] text-white hover:opacity-90 transition"
+            className="rounded-lg bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] px-6 py-3 text-white transition hover:opacity-90"
           >
             Order Now
           </Link>
 
           <Link
             href="/contact"
-            className="px-6 py-3 rounded-lg border border-white hover:bg-white hover:text-[hsl(0,0%,7%)] transition"
+            className="rounded-lg border border-white px-6 py-3 transition hover:bg-white hover:text-[hsl(0,0%,7%)]"
           >
             Contact Us
           </Link>

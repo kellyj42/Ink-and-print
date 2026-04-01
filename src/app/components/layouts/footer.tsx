@@ -1,25 +1,23 @@
 import Link from "next/link";
-import { Globe, MessageCircle, Phone, MapPin } from "lucide-react";
+import { Globe, MapPin, MessageCircle, Phone } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[hsl(0,0%,7%)] text-white pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 grid gap-10 md:grid-cols-4">
-        {/* BRAND */}
+    <footer className="bg-[hsl(0,0%,7%)] pt-16 pb-8 text-white">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 md:grid-cols-4">
         <div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] bg-clip-text text-transparent">
+          <h2 className="bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] bg-clip-text text-2xl font-bold text-transparent">
             INK & APPARELS
           </h2>
-          <p className="mt-4 text-[hsl(0,0%,100%,0.7)] text-sm">
+          <p className="mt-4 text-sm text-[hsl(0,0%,100%,0.7)]">
             Your quality and creative place for custom printing, branding, and
             apparel.
           </p>
         </div>
 
-        {/* QUICK LINKS */}
         <div>
-          <h3 className="font-semibold mb-4">Quick Links</h3>
-          <ul className="space-y-2 text-[hsl(0,0%,100%,0.7)] text-sm">
+          <h3 className="mb-4 font-semibold">Quick Links</h3>
+          <ul className="space-y-2 text-sm text-[hsl(0,0%,100%,0.7)]">
             <li>
               <Link href="/" className="hover:text-white">
                 Home
@@ -48,10 +46,9 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* SERVICES */}
         <div>
-          <h3 className="font-semibold mb-4">Our Services</h3>
-          <ul className="space-y-2 text-[hsl(0,0%,100%,0.7)] text-sm">
+          <h3 className="mb-4 font-semibold">Our Services</h3>
+          <ul className="space-y-2 text-sm text-[hsl(0,0%,100%,0.7)]">
             <li>UV Printing</li>
             <li>DTF Printing</li>
             <li>Vinyl Cutting</li>
@@ -59,29 +56,37 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* CONTACT */}
         <div>
-          <h3 className="font-semibold mb-4">Contact</h3>
-          <ul className="space-y-3 text-[hsl(0,0%,100%,0.7)] text-sm">
+          <h3 className="mb-4 font-semibold">Contact</h3>
+          <ul className="space-y-3 text-sm text-[hsl(0,0%,100%,0.7)]">
             <li className="flex items-center gap-2">
-              <Phone size={16} /> 0704444845
+              <Phone size={16} /> WhatsApp/Calls: 0704444845
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone size={16} /> Other calls: 0790084845
             </li>
             <li className="flex items-center gap-2">
               <MapPin size={16} /> Swift Plaza, SD 148
             </li>
+            <li className="break-all">jamiebanku10@gmail.com</li>
           </ul>
 
-          {/* SOCIALS */}
-          <div className="flex gap-4 mt-4">
+          <div className="mt-4 flex gap-4">
             <a
-              href="#"
-              className="p-2 rounded-full bg-[hsl(0,0%,95%,0.1)] hover:bg-[hsl(355,82%,56%)] transition"
+              href="https://www.instagram.com/ink_n_apparels/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              className="rounded-full bg-[hsl(0,0%,95%,0.1)] p-2 transition hover:bg-[hsl(355,82%,56%)]"
             >
               <Globe size={18} />
             </a>
             <a
-              href="#"
-              className="p-2 rounded-full bg-[hsl(0,0%,95%,0.1)] hover:bg-[hsl(355,82%,56%)] transition"
+              href="https://www.tiktok.com/@ink_n_apparelsventures"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="TikTok"
+              className="rounded-full bg-[hsl(0,0%,95%,0.1)] p-2 transition hover:bg-[hsl(355,82%,56%)]"
             >
               <MessageCircle size={18} />
             </a>
@@ -89,9 +94,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* BOTTOM */}
-      <div className="border-t border-[hsl(0,0%,95%,0.1)] mt-10 pt-6 text-center text-sm text-[hsl(0,0%,100%,0.6)]">
-        © {new Date().getFullYear()} Ink & Apparels. All rights reserved.
+      <div className="mt-10 border-t border-[hsl(0,0%,95%,0.1)] pt-6 text-center text-sm text-[hsl(0,0%,100%,0.6)]">
+        &copy; {new Date().getFullYear()} Ink & Apparels. All rights reserved.
       </div>
     </footer>
   );

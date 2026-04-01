@@ -12,22 +12,22 @@ import {
 
 const contactCards = [
   {
-    title: "Call Us",
+    title: "WhatsApp + Calls",
     value: "0704444845",
-    description: "Reach out directly for quick questions, updates, and order discussions.",
+    description: "Best for WhatsApp chats, quick questions, and direct order conversations.",
     icon: Phone,
   },
   {
-    title: "WhatsApp",
-    value: "Chat with our team",
-    description: "Great for sending references, artwork direction, and quick order follow-up.",
+    title: "Other Calls",
+    value: "0790084845",
+    description: "Use this line for additional calls and alternative contact support.",
     icon: MessageCircle,
   },
   {
-    title: "Visit Us",
-    value: "Swift Plaza, SD 148",
-    description: "Come by for consultations, product checks, and in-person order guidance.",
-    icon: MapPin,
+    title: "Email Us",
+    value: "jamiebanku10@gmail.com",
+    description: "Send artwork notes, quote requests, and detailed project information here.",
+    icon: Mail,
   },
 ];
 
@@ -252,9 +252,19 @@ export default function ContactPage() {
                 <div className="flex items-start gap-4">
                   <Phone className="mt-1 h-5 w-5 text-[hsl(355,82%,56%)]" />
                   <div>
-                    <p className="font-semibold">Phone</p>
+                    <p className="font-semibold">WhatsApp and Calls</p>
                     <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
                       0704444845
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <Phone className="mt-1 h-5 w-5 text-[hsl(355,82%,56%)]" />
+                  <div>
+                    <p className="font-semibold">Other Calls</p>
+                    <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
+                      0790084845
                     </p>
                   </div>
                 </div>
@@ -284,10 +294,29 @@ export default function ContactPage() {
                   <div>
                     <p className="font-semibold">Email</p>
                     <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
-                      Add your business email here when ready
+                      jamiebanku10@gmail.com
                     </p>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="https://www.instagram.com/ink_n_apparels/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-[hsl(0,0%,88%)] px-4 py-2 text-sm font-medium text-[hsl(0,0%,28%)] transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
+                >
+                  Instagram
+                </a>
+                <a
+                  href="https://www.tiktok.com/@ink_n_apparelsventures"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-[hsl(0,0%,88%)] px-4 py-2 text-sm font-medium text-[hsl(0,0%,28%)] transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
+                >
+                  TikTok
+                </a>
               </div>
 
               <Link

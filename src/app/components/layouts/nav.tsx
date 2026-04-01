@@ -3,16 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
+import { useCart } from "../../../lib/use-cart";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    document.documentElement.classList.toggle("dark");
-    setDarkMode(!darkMode);
-  };
+  const cartItems = useCart();
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <nav className="w-full fixed top-0 left-0 z-50 bg-[hsl(0,0%,7%)]  shadow-sm">
@@ -80,6 +77,19 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
+          <Link
+            href="/checkout"
+            className="relative hover:text-[hsl(355,82%,56%)] transition"
+          >
+            Cart
+            {cartCount > 0 ? (
+              <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(355,82%,56%)] px-1 text-[10px] font-bold text-white">
+                {cartCount}
+              </span>
+            ) : null}
+          </Link>
+          </li>
+          <li>
             <Link
               href="/contact"
               className="hover:text-[hsl(355,82%,56%)] transition"
@@ -91,9 +101,18 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="hidden md:flex items-center space-x-4">
-          {/* Dark Mode Toggle */}
-
-          {/* CTA Button */}
+          <Link
+            href="/checkout"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-4 py-2 text-white transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            Cart
+            {cartCount > 0 ? (
+              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(355,82%,56%)] px-1 text-[10px] font-bold text-white">
+                {cartCount}
+              </span>
+            ) : null}
+          </Link>
           <Link
             href="/order"
             className="px-5 py-2 rounded-lg text-white bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] hover:opacity-90 transition"
@@ -131,6 +150,12 @@ export default function Navbar() {
           </Link>
           <Link href="/order" className="block hover:text-[hsl(355,82%,56%)]">
             Order
+          </Link>
+          <Link
+            href="/checkout"
+            className="block hover:text-[hsl(355,82%,56%)]"
+          >
+            Cart {cartCount > 0 ? `(${cartCount})` : ""}
           </Link>
           <Link href="/contact" className="block hover:text-[hsl(355,82%,56%)]">
             Contact
