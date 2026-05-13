@@ -11,6 +11,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import { buildMetadata } from "../../lib/seo";
+import { getSiteSettings, toTelHref } from "../../lib/site-settings";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",
@@ -23,27 +26,6 @@ export const metadata: Metadata = buildMetadata({
     "apparel printing contact",
   ],
 });
-
-const contactCards = [
-  {
-    title: "WhatsApp + Calls",
-    value: "0704444845",
-    description: "Best for WhatsApp chats, quick questions, and direct order conversations.",
-    icon: Phone,
-  },
-  {
-    title: "Other Calls",
-    value: "0790084845",
-    description: "Use this line for additional calls and alternative contact support.",
-    icon: MessageCircle,
-  },
-  {
-    title: "Email Us",
-    value: "jamiebanku10@gmail.com",
-    description: "Send artwork notes, quote requests, and detailed project information here.",
-    icon: Mail,
-  },
-];
 
 const businessNotes = [
   "Monday to Saturday support for order discussions and production planning",
@@ -69,7 +51,32 @@ const reasonsToReachOut = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+  const contactCards = [
+    {
+      title: "WhatsApp + Calls",
+      value: settings.phone,
+      description:
+        "Best for WhatsApp chats, quick questions, and direct order conversations.",
+      icon: Phone,
+    },
+    {
+      title: "Visit Us",
+      value: settings.location,
+      description:
+        "Use this location for pickup discussions, samples, and in-person support.",
+      icon: MessageCircle,
+    },
+    {
+      title: "Email Us",
+      value: settings.email,
+      description:
+        "Send artwork notes, quote requests, and detailed project information here.",
+      icon: Mail,
+    },
+  ];
+
   return (
     <main className="bg-[hsl(0,0%,100%)] text-[hsl(0,0%,7%)]">
       <section className="relative overflow-hidden bg-[hsl(0,0%,7%)] pb-24 pt-32 text-white">
@@ -78,7 +85,8 @@ export default function ContactPage() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur">
               <BadgeCheck className="h-4 w-4 text-[hsl(24,95%,53%)]" />
-              Reach us for orders, quotes, brand work, and creative guidance
+              Reach {settings.businessName} for orders, quotes, brand work, and
+              creative guidance
             </div>
 
             <h1 className="mt-6 max-w-4xl text-5xl font-bold leading-tight md:text-7xl">
@@ -117,7 +125,10 @@ export default function ContactPage() {
             </p>
             <div className="mt-6 space-y-4">
               {businessNotes.map((note) => (
-                <div key={note} className="flex gap-3 rounded-2xl bg-white/5 p-4">
+                <div
+                  key={note}
+                  className="flex gap-3 rounded-2xl bg-white/5 p-4"
+                >
                   <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-[hsl(24,95%,53%)]" />
                   <p className="text-sm leading-6 text-white/80">{note}</p>
                 </div>
@@ -163,8 +174,8 @@ export default function ContactPage() {
               Contact us for quotes, questions, or custom ideas
             </h2>
             <p className="mt-4 max-w-2xl text-lg text-[hsl(0,0%,7%,0.68)]">
-              This gives your contact page a clean premium layout now, and it can
-              later be wired to email, WhatsApp, or a backend form handler.
+              This gives your contact page a clean premium layout now, and it
+              can later be wired to email, WhatsApp, or a backend form handler.
             </p>
 
             <form className="mt-10 grid gap-6">
@@ -268,17 +279,7 @@ export default function ContactPage() {
                   <div>
                     <p className="font-semibold">WhatsApp and Calls</p>
                     <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
-                      0704444845
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <Phone className="mt-1 h-5 w-5 text-[hsl(355,82%,56%)]" />
-                  <div>
-                    <p className="font-semibold">Other Calls</p>
-                    <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
-                      0790084845
+                      <a href={toTelHref(settings.phone)}>{settings.phone}</a>
                     </p>
                   </div>
                 </div>
@@ -288,7 +289,7 @@ export default function ContactPage() {
                   <div>
                     <p className="font-semibold">Location</p>
                     <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
-                      Swift Plaza, SD 148
+                      {settings.location}
                     </p>
                   </div>
                 </div>
@@ -308,7 +309,7 @@ export default function ContactPage() {
                   <div>
                     <p className="font-semibold">Email</p>
                     <p className="mt-1 text-sm text-[hsl(0,0%,7%,0.68)]">
-                      jamiebanku10@gmail.com
+                      {settings.email}
                     </p>
                   </div>
                 </div>
@@ -316,7 +317,7 @@ export default function ContactPage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
-                  href="https://www.instagram.com/ink_n_apparels/"
+                  href="https://www.instagram.com/ink_and_print/"
                   target="_blank"
                   rel="noreferrer"
                   className="rounded-full border border-[hsl(0,0%,88%)] px-4 py-2 text-sm font-medium text-[hsl(0,0%,28%)] transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
@@ -324,7 +325,7 @@ export default function ContactPage() {
                   Instagram
                 </a>
                 <a
-                  href="https://www.tiktok.com/@ink_n_apparelsventures"
+                  href="https://www.tiktok.com/@ink_and_print"
                   target="_blank"
                   rel="noreferrer"
                   className="rounded-full border border-[hsl(0,0%,88%)] px-4 py-2 text-sm font-medium text-[hsl(0,0%,28%)] transition hover:border-[hsl(355,82%,56%)] hover:text-[hsl(355,82%,56%)]"
@@ -355,7 +356,8 @@ export default function ContactPage() {
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-white/90">
             Contact is perfect for questions and consultations. If you&apos;re
-            ready to start a job, the order page will help you structure the request.
+            ready to start a job, the order page will help you structure the
+            request.
           </p>
 
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">

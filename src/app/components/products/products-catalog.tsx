@@ -17,7 +17,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import type { Product } from "../../../data/products";
+import type { Product } from "../../../lib/products";
 import { CartItem, writeCart } from "../../../lib/cart";
 import { useCart } from "../../../lib/use-cart";
 import { formatUGX } from "../../../lib/format";
@@ -295,7 +295,7 @@ export default function ProductsCatalog({
           <div className="mt-12 rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-12 text-center">
             <h3 className="text-2xl font-bold">No products available yet</h3>
             <p className="mt-3 text-gray-600">
-              Update the local product catalog and they&apos;ll appear here automatically.
+              Add products in the admin dashboard and they&apos;ll appear here automatically.
             </p>
             <Link
               href="/"

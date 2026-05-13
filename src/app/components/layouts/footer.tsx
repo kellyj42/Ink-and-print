@@ -1,17 +1,53 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import { Globe, MapPin, MessageCircle, Phone } from "lucide-react";
+import { createSupabaseBrowserClient } from "../../../lib/supabase/client";
+import {
+  DEFAULT_SITE_SETTINGS,
+  rowToSiteSettings,
+  toTelHref,
+  type SiteSettings,
+} from "../../../lib/site-settings";
 
 export default function Footer() {
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SITE_SETTINGS);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadSettings() {
+      const { data } = await supabase
+        .from("site_settings")
+        .select(
+          "business_name, hero_eyebrow, hero_headline, hero_description, hero_cta_text, about_title, about_description_1, about_description_2, phone, email, location, whatsapp_number",
+        )
+        .eq("id", 1)
+        .maybeSingle();
+
+      if (!ignore && data) {
+        setSettings(rowToSiteSettings(data));
+      }
+    }
+
+    loadSettings();
+
+    return () => {
+      ignore = true;
+    };
+  }, [supabase]);
+
   return (
     <footer className="bg-[hsl(0,0%,7%)] pt-16 pb-8 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 md:grid-cols-4">
         <div>
           <h2 className="bg-gradient-to-r from-[hsl(355,82%,56%)] to-[hsl(24,95%,53%)] bg-clip-text text-2xl font-bold text-transparent">
-            INK & APPARELS
+            {settings.businessName}
           </h2>
           <p className="mt-4 text-sm text-[hsl(0,0%,100%,0.7)]">
-            Your quality and creative place for custom printing, branding, and
-            apparel.
+            {settings.heroDescription}
           </p>
         </div>
 
@@ -60,20 +96,20 @@ export default function Footer() {
           <h3 className="mb-4 font-semibold">Contact</h3>
           <ul className="space-y-3 text-sm text-[hsl(0,0%,100%,0.7)]">
             <li className="flex items-center gap-2">
-              <Phone size={16} /> WhatsApp/Calls: 0704444845
+              <Phone size={16} />
+              <a href={toTelHref(settings.phone)}>
+                WhatsApp/Calls: {settings.phone}
+              </a>
             </li>
             <li className="flex items-center gap-2">
-              <Phone size={16} /> Other calls: 0790084845
+              <MapPin size={16} /> {settings.location}
             </li>
-            <li className="flex items-center gap-2">
-              <MapPin size={16} /> Swift Plaza, SD 148
-            </li>
-            <li className="break-all">jamiebanku10@gmail.com</li>
+            <li className="break-all">{settings.email}</li>
           </ul>
 
           <div className="mt-4 flex gap-4">
             <a
-              href="https://www.instagram.com/ink_n_apparels/"
+              href="https://www.instagram.com/ink_and_print/"
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
@@ -82,7 +118,7 @@ export default function Footer() {
               <Globe size={18} />
             </a>
             <a
-              href="https://www.tiktok.com/@ink_n_apparelsventures"
+              href="https://www.tiktok.com/@ink_and_print"
               target="_blank"
               rel="noreferrer"
               aria-label="TikTok"
@@ -95,7 +131,8 @@ export default function Footer() {
       </div>
 
       <div className="mt-10 border-t border-[hsl(0,0%,95%,0.1)] pt-6 text-center text-sm text-[hsl(0,0%,100%,0.6)]">
-        &copy; {new Date().getFullYear()} Ink & Apparels. All rights reserved.
+        &copy; {new Date().getFullYear()} {settings.businessName}. All rights
+        reserved.
       </div>
     </footer>
   );

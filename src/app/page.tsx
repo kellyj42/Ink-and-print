@@ -4,6 +4,9 @@ import Hero from "./components/sections/Hero";
 import ServicesPage from "./components/sections/Services";
 import TrustSection from "./components/sections/TrustSection";
 import { absoluteUrl, buildMetadata, siteConfig } from "../lib/seo";
+import { getSiteSettings } from "../lib/site-settings";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
   title: "Custom Printing and Branded Apparel",
@@ -18,24 +21,25 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getSiteSettings();
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: siteConfig.name,
+    name: settings.businessName,
     url: siteConfig.url,
     image: absoluteUrl(siteConfig.ogImage),
-    description: siteConfig.description,
-    email: siteConfig.email,
-    telephone: siteConfig.phonePrimary,
+    description: settings.heroDescription,
+    email: settings.email,
+    telephone: settings.phone,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.location,
+      streetAddress: settings.location,
       addressCountry: "UG",
     },
     sameAs: [
-      "https://www.instagram.com/ink_n_apparels/",
-      "https://www.tiktok.com/@ink_n_apparelsventures",
+      "https://www.instagram.com/ink_and_print/",
+      "https://www.tiktok.com/@ink_and_print",
     ],
     areaServed: "Uganda",
     serviceType: [
@@ -48,18 +52,18 @@ export default function Home() {
   };
 
   return (
-   <>
-     <script
-       type="application/ld+json"
-       dangerouslySetInnerHTML={{
-         __html: JSON.stringify(organizationSchema),
-       }}
-     />
-     
-     <Hero/>
-     <FeaturedProducts/>
-     <ServicesPage/>
-     <TrustSection/>
-   </>
-  )
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+
+      <Hero settings={settings} />
+      <FeaturedProducts />
+      <ServicesPage />
+      <TrustSection />
+    </>
+  );
 }

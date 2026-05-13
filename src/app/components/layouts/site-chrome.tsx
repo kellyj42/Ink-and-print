@@ -11,10 +11,12 @@ export default function SiteChrome({
 }>) {
   const pathname = usePathname();
   const isSanityRoute = pathname?.startsWith("/sanity");
+  const isAdminRoute = pathname?.startsWith("/admin");
+  const isConfirmEmailRoute = pathname?.startsWith("/confirm-email");
 
   return (
     <>
-      {!isSanityRoute && <Navbar />}
+      {!isSanityRoute && !isAdminRoute && !isConfirmEmailRoute && <Navbar />}
       {children}
       <Footer />
     </>

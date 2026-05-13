@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { products } from "../../../data/products";
+import { getFeaturedProducts } from "../../../lib/products";
 
-export default function FeaturedProducts() {
-  const featuredProducts = products.slice(0, 4);
+export default async function FeaturedProducts() {
+  const featuredProducts = await getFeaturedProducts(4);
 
   if (featuredProducts.length === 0) {
     return (
@@ -24,7 +24,7 @@ export default function FeaturedProducts() {
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-[hsl(0,0%,7%,0.6)]">
-            Add or edit products in the local static catalog and they&apos;ll
+            Add or edit products in the admin dashboard and they&apos;ll
             appear here automatically.
           </p>
           <div className="mt-10 flex justify-center">

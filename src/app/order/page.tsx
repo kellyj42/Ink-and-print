@@ -11,6 +11,9 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { buildMetadata } from "../../lib/seo";
+import { getSiteSettings, toTelHref } from "../../lib/site-settings";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
   title: "Order Custom Printing",
@@ -58,7 +61,9 @@ const orderNotes = [
   },
 ];
 
-export default function OrderPage() {
+export default async function OrderPage() {
+  const settings = await getSiteSettings();
+
   return (
     <main className="bg-[hsl(0,0%,100%)] text-[hsl(0,0%,7%)]">
       <section className="border-b border-[hsl(0,0%,92%)] bg-[hsl(0,0%,99%)] pt-28 pb-8">
@@ -72,8 +77,8 @@ export default function OrderPage() {
                 Fill in your request and let&apos;s move into production
               </h1>
               <p className="mt-4 text-lg text-[hsl(0,0%,7%,0.68)]">
-                This page is now built to feel direct and practical, so the client
-                lands on the order flow quickly instead of reading through a full hero.
+                Send your request to {settings.businessName}, and we&apos;ll use
+                your details to confirm the best production path.
               </p>
             </div>
 
@@ -310,9 +315,11 @@ export default function OrderPage() {
                   <p className="font-semibold">Contact Lines</p>
                 </div>
                 <div className="mt-2 space-y-1 text-sm text-[hsl(0,0%,7%,0.68)]">
-                  <p>WhatsApp and calls: 0704444845</p>
-                  <p>Other calls: 0790084845</p>
-                  <p className="break-all">Email: jamiebanku10@gmail.com</p>
+                  <p>
+                    WhatsApp and calls:{" "}
+                    <a href={toTelHref(settings.phone)}>{settings.phone}</a>
+                  </p>
+                  <p className="break-all">Email: {settings.email}</p>
                 </div>
               </div>
             </div>

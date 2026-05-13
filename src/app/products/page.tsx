@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import ProductsCatalog from "../components/products/products-catalog";
-import { products } from "../../data/products";
+import { getPublishedProducts } from "../../lib/products";
 import { buildMetadata } from "../../lib/seo";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildMetadata({
   title: "Products",
@@ -16,6 +18,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function ProductsPage() {
-  return <ProductsCatalog initialProducts={products} />;
+export default async function ProductsPage() {
+  const databaseProducts = await getPublishedProducts();
+
+  return <ProductsCatalog initialProducts={databaseProducts} />;
 }
