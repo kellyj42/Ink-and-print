@@ -126,6 +126,19 @@ export default function AuthForm({ mode }: AuthFormProps) {
     }
   }
 
+  async function getRedirectPathForUser(
+    supabaseClient: ReturnType<typeof createSupabaseBrowserClient>,
+    userId: string,
+  ) {
+    const { data } = await supabaseClient
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .maybeSingle<{ role: string }>();
+
+    return data?.role === "admin" ? "/admin" : "/";
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -180,8 +193,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
         }
 
         if (data.session) {
-          setMessage("Account created successfully. Redirecting to admin...");
-          router.push("/admin");
+          const redirectPath = await getRedirectPathForUser(
+            supabase,
+            data.session.user.id,
+          );
+          setMessage("Account created successfully. Redirecting...");
+          router.push(redirectPath);
           router.refresh();
           return;
         }
@@ -213,8 +230,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
         );
       }
 
-      setMessage("Login successful. Redirecting to admin...");
-      router.push("/admin");
+      const redirectPath = loginData.user?.id
+        ? await getRedirectPathForUser(supabase, loginData.user.id)
+        : "/";
+
+      setMessage("Login successful. Redirecting...");
+      router.push(redirectPath);
       router.refresh();
     } catch (submitError) {
       setError(
