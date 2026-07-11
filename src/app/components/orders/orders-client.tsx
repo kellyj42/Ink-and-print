@@ -13,7 +13,7 @@ import {
 import { formatUGX } from "../../../lib/format";
 
 type LoadState = "loading" | "ready";
-
+// hdhdhd
 export default function OrdersClient() {
   const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [error, setError] = useState("");
