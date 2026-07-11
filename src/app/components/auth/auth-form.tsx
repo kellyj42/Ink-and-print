@@ -75,7 +75,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
             footerLinkLabel: "Create one",
             footerLinkHref: "/signup",
           },
-    [isSignup]
+    [isSignup],
   );
 
   useEffect(() => {
@@ -103,6 +103,28 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const updateField = (field: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
+
+  async function ensureUserProfile(
+    supabaseClient: ReturnType<typeof createSupabaseBrowserClient>,
+    userId: string,
+    email: string,
+  ) {
+    const payload = {
+      id: userId,
+      email,
+      full_name: form.fullName.trim() || null,
+      phone: form.phone.trim() || null,
+      updated_at: new Date().toISOString(),
+    };
+
+    const { error } = await supabaseClient
+      .from("profiles")
+      .upsert(payload, { onConflict: "id" });
+
+    if (error) {
+      console.error("Could not create or update profile row:", error);
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -153,6 +175,10 @@ export default function AuthForm({ mode }: AuthFormProps) {
           return;
         }
 
+        if (data.user?.id) {
+          await ensureUserProfile(supabase, data.user.id, form.email.trim());
+        }
+
         if (data.session) {
           setMessage("Account created successfully. Redirecting to admin...");
           router.push("/admin");
@@ -160,20 +186,31 @@ export default function AuthForm({ mode }: AuthFormProps) {
           return;
         }
 
-        setMessage("Account created. Check your email for a confirmation link.");
+        setMessage(
+          "Account created. Check your email for a confirmation link.",
+        );
         router.push("/confirm-email");
         router.refresh();
         return;
       }
 
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email: form.email.trim(),
-        password: form.password,
-      });
+      const { data: loginData, error: loginError } =
+        await supabase.auth.signInWithPassword({
+          email: form.email.trim(),
+          password: form.password,
+        });
 
       if (loginError) {
         setError(loginError.message);
         return;
+      }
+
+      if (loginData.user?.id) {
+        await ensureUserProfile(
+          supabase,
+          loginData.user.id,
+          loginData.user.email ?? form.email.trim(),
+        );
       }
 
       setMessage("Login successful. Redirecting to admin...");
@@ -183,7 +220,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "Something went wrong while connecting to authentication."
+          : "Something went wrong while connecting to authentication.",
       );
     } finally {
       setIsSubmitting(false);
@@ -248,7 +285,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
                   <input
                     type="text"
                     value={form.fullName}
-                    onChange={(event) => updateField("fullName", event.target.value)}
+                    onChange={(event) =>
+                      updateField("fullName", event.target.value)
+                    }
                     placeholder="Your full name"
                     className="w-full bg-transparent px-3 py-3 outline-none"
                   />
@@ -264,7 +303,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
                   <input
                     type="email"
                     value={form.email}
-                    onChange={(event) => updateField("email", event.target.value)}
+                    onChange={(event) =>
+                      updateField("email", event.target.value)
+                    }
                     placeholder="you@example.com"
                     className="w-full bg-transparent px-3 py-3 outline-none"
                   />
@@ -279,7 +320,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
                     <input
                       type="tel"
                       value={form.phone}
-                      onChange={(event) => updateField("phone", event.target.value)}
+                      onChange={(event) =>
+                        updateField("phone", event.target.value)
+                      }
                       placeholder="07XXXXXXXX"
                       className="w-full bg-transparent px-3 py-3 outline-none"
                     />
@@ -295,7 +338,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={form.password}
-                  onChange={(event) => updateField("password", event.target.value)}
+                  onChange={(event) =>
+                    updateField("password", event.target.value)
+                  }
                   placeholder="Enter your password"
                   className="w-full bg-transparent px-3 py-3 outline-none"
                 />
@@ -347,7 +392,10 @@ export default function AuthForm({ mode }: AuthFormProps) {
             ) : (
               <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
                 <label className="inline-flex items-center gap-2 text-[hsl(0,0%,7%,0.65)]">
-                  <input type="checkbox" className="h-4 w-4 rounded border-gray-300" />
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-gray-300"
+                  />
                   Remember me
                 </label>
                 <Link

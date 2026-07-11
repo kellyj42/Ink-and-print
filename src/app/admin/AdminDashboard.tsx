@@ -227,6 +227,7 @@ export default function AdminDashboard() {
   const [newsletters, setNewsletters] = useState<NewsletterRow[]>([]);
   const [orders, setOrders] = useState<AdminOrderRow[]>([]);
   const [isProductFormOpen, setIsProductFormOpen] = useState(false);
+  const [isUploadingProductImage, setIsUploadingProductImage] = useState(false);
   const [productDraft, setProductDraft] = useState<ProductDraft>(
     productToDraft(emptyProduct)
   );
@@ -408,6 +409,50 @@ export default function AdminDashboard() {
   function cancelProductForm() {
     setProductDraft(productToDraft(emptyProduct));
     setIsProductFormOpen(false);
+  }
+
+  async function handleProductImageChange(file: File | null) {
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setError("Please choose an image file.");
+      return;
+    }
+
+    setIsUploadingProductImage(true);
+    setMessage("");
+    setError("");
+
+    const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const productFolder = productDraft.id.trim() || crypto.randomUUID();
+    const fileName = `${crypto.randomUUID()}.${extension}`;
+    const filePath = `${productFolder}/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("product-images")
+      .upload(filePath, file, {
+        cacheControl: "31536000",
+        upsert: false,
+      });
+
+    if (uploadError) {
+      setError(
+        `${uploadError.message}. Make sure the product-images storage bucket exists by running supabase/admin_crud.sql.`
+      );
+      setIsUploadingProductImage(false);
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from("product-images")
+      .getPublicUrl(filePath);
+
+    setProductDraft((draft) => ({
+      ...draft,
+      image: data.publicUrl,
+    }));
+    setMessage("Product image uploaded. Save the product to keep this image.");
+    setIsUploadingProductImage(false);
   }
 
   async function deleteProduct(id: string) {
@@ -733,7 +778,34 @@ export default function AdminDashboard() {
                     ))}
                   </datalist>
                 </div>
-                <TextField label="Image path" value={productDraft.image} onChange={(value) => setProductDraft((draft) => ({ ...draft, image: value }))} />
+                <div>
+                  <label className={labelClass}>Product image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) =>
+                      handleProductImageChange(event.target.files?.[0] ?? null)
+                    }
+                    className="w-full rounded-2xl border border-[hsl(0,0%,84%)] bg-white px-4 py-3 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[hsl(0,0%,7%)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-[hsl(355,82%,56%)]"
+                  />
+                  <p className="mt-2 text-xs leading-5 text-[hsl(0,0%,45%)]">
+                    {isUploadingProductImage
+                      ? "Uploading image..."
+                      : productDraft.image
+                        ? "Image uploaded. Save the product to publish it."
+                        : "Choose an image from your computer."}
+                  </p>
+                  {productDraft.image ? (
+                    <div className="mt-3 overflow-hidden rounded-2xl border border-[hsl(0,0%,88%)] bg-white">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={productDraft.image}
+                        alt="Selected product"
+                        className="h-40 w-full object-cover"
+                      />
+                    </div>
+                  ) : null}
+                </div>
                 <NumberField label="Price" value={productDraft.price} onChange={(value) => setProductDraft((draft) => ({ ...draft, price: value }))} />
                 <NumberField label="Original price" value={productDraft.original_price ?? 0} onChange={(value) => setProductDraft((draft) => ({ ...draft, original_price: value || null }))} />
                 <NumberField label="Rating" value={productDraft.rating} onChange={(value) => setProductDraft((draft) => ({ ...draft, rating: value }))} />
@@ -748,7 +820,7 @@ export default function AdminDashboard() {
                 <TextArea label="Colors, one per line as Name|#hex" value={productDraft.colorsText} onChange={(value) => setProductDraft((draft) => ({ ...draft, colorsText: value }))} />
                 <TextArea label="Sizes, comma separated" value={productDraft.sizesText} onChange={(value) => setProductDraft((draft) => ({ ...draft, sizesText: value }))} />
               </div>
-              <SaveButton label="Save product" onClick={saveProduct} disabled={status === "saving"} />
+              <SaveButton label="Save product" onClick={saveProduct} disabled={status === "saving" || isUploadingProductImage} />
             </div>
           ) : null}
 
